@@ -17,7 +17,7 @@ router.route('/add').post((req, res) => {
 
 
     //fetch faq questions for check
-    User.find({}, { question: 1, _id: 0 })
+    Faq.find({}, { question: 1, _id: 0 })
         .then(questions => {
             console.log("first", questions)
 
@@ -30,7 +30,7 @@ router.route('/add').post((req, res) => {
             })
         })
         .catch(err => res.status(400).json('Error: ' + err))
-
+    
     const newFaq = new Faq({
         category,
         question,
