@@ -80,6 +80,7 @@ router.route('/update/:id').post((req, res) => {
 });
 
 //--> Reset Users password
+
 router.route('/resetPassword/:id').post((req, res)=>{
   User.findById(req.params.id)
   .then(userPwd => {
