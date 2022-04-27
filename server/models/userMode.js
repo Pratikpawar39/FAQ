@@ -20,6 +20,10 @@ const userSchema = new Schema({
       required: true,
       minlength: 6,
       maxlength: 10
+  },
+  DOB: {
+    type:Date,
+    required: true
   }
 }, {
   timestamps: true,

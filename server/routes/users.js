@@ -16,6 +16,7 @@ router.route('/add').post((req, res) => {
   const name = req.body.name;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
+  const DOB =  Date.parse(req.body.date);
 
   //fetch usernames for check
   User.find({}, { username: 1, _id: 0 })
@@ -37,7 +38,8 @@ router.route('/add').post((req, res) => {
     const newUser = new User({
       username,
       name,
-      password
+      password,
+      DOB
     });
 
     //save userDetails in mongo
@@ -70,6 +72,7 @@ router.route('/update/:id').post((req, res) => {
     .then(uData => {
       uData.username = req.body.username;
       uData.name = req.body.name;
+      uData.DOB = Date.parse(req.body.date);
 
       //update all detailes escape password
       uData.save()
