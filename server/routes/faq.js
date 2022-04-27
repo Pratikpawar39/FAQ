@@ -30,7 +30,7 @@ router.route('/add').post((req, res) => {
             })
         })
         .catch(err => res.status(400).json('Error: ' + err))
-    
+
     const newFaq = new Faq({
         category,
         question,
@@ -39,8 +39,37 @@ router.route('/add').post((req, res) => {
 
     //save faq details
     newFaq.save()
-        .then(() => res.json('Faq created!'))
+        .then(() => res.json('FAQ created!'))
         .catch((err) => res.status(400).json('Error: ' + err))
 })
+
+//--> get FAQ by id
+router.route('/:id').get((req, res) => {
+    Faq.findById(req.params.id)
+        .then(fData => res.json(fData))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//--> delete FAQ by id
+router.route('/:id').delete((req, res) => {
+    Faq.findByIdAndDelete(req.params.id)
+        .then(() => res.json('FAQ deleted.'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//--> update FAQ by id
+router.route('/update/:id').post((req, res) => {
+    Faq.findById(req.params.id)
+        .then(fData => {
+            fData.category = req.body.category;
+            fData.question = req.body.question;
+            fData.answer = req.body.answer;
+
+            fData.save()
+                .then(() => res.json('FAQ updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 module.exports = router;
