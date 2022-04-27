@@ -50,4 +50,51 @@ router.route('/add').post((req, res) => {
 
 });
 
+//--> get User by id
+router.route('/:id').get((req, res) => {
+  User.findById(req.params.id)
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//--> delete User by id
+router.route('/:id').delete((req, res) => {
+  User.findByIdAndDelete(req.params.id)
+    .then(() => res.json('User deleted.'))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//--> update User details by id
+router.route('/update/:id').post((req, res) => {
+  User.findById(req.params.id)
+    .then(uData => {
+      uData.username = req.body.username;
+      uData.name = req.body.name;
+
+      //update all detailes escape password
+      uData.save()
+        .then(() => res.json('User details updated!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//--> reset users password
+router.route('/resetPassword/:id').post((req, res)=>{
+  User.findById(req.params.id)
+  .then(userPwd => {
+    userPwd.password = req.body.password;
+    const cPwd = req.body.confirmPassword;
+
+    //confirm reset password and save
+    if(userPwd.password === cPwd){
+      userPwd.save()
+      .then(() => res.json('Reset Password Successfully!'))
+      .catch(err => res.status(400).json('Error: ' + err));
+    }
+  })
+  .catch(err => res.status(400).json('Error: ' + err));
+})
+
+
 module.exports = router;

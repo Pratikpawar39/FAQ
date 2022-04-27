@@ -12,7 +12,7 @@ app.use(express.json());
 
 //mongoose connection
 const uri = process.env.ATLAS_URI || 'mongodb://localhost:27017/faq';
-mongoose.connect(uri, { useNewUrlParser: true, }//useCreateIndex: true 
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }//useCreateIndex: true 
 );
 const connection = mongoose.connection;
 connection.once('open', () => {
