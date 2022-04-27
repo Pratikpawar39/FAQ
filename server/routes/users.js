@@ -79,6 +79,7 @@ router.route('/update/:id').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//--> reset users password
 router.route('/resetPassword/:id').post((req, res)=>{
   User.findById(req.params.id)
   .then(userPwd => {
